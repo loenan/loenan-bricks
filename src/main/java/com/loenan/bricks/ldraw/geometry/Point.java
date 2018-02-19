@@ -30,11 +30,15 @@ public class Point {
         return plus(this, o);
     }
 
+    public Point mult(double n) {
+        return new Point(n * x, n * y, n* z);
+    }
+
     public static Point plus(Point a, Point b) {
         return new Point(a.x + b.x, a.y + b.y, a.z + b.z);
     }
 
     public String format() {
-        return x + " " + y + " " + z;
+        return Format.format(this);
     }
 }

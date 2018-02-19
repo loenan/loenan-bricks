@@ -11,13 +11,12 @@ import java.util.Map;
 
 public class LDrawWriter {
 
-    public void writeTo(MultiPartDocument document, OutputStream outputStream) throws IOException {
-        Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
+    public void write(MultiPartDocument document, OutputStream outputStream) throws IOException {
+        try (Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8)) {
 
-        Map<String, LDrawFile> files = new LinkedHashMap<>();
-        addFileAndSubFiles(files, document.getMainModel());
+            Map<String, LDrawFile> files = new LinkedHashMap<>();
+            addFileAndSubFiles(files, document.getMainModel());
 
-        try {
             files.values().stream()
                     .flatMap(LDrawFile::getCommandLines)
                     .forEach(line -> {

@@ -1,5 +1,12 @@
 package com.loenan.bricks.api.controller;
 
+import com.loenan.bricks.ldraw.builder.LDrawBuilder;
+import com.loenan.bricks.ldraw.color.Color;
+import com.loenan.bricks.ldraw.color.Colors;
+import com.loenan.bricks.ldraw.geometry.CubeFace;
+import com.loenan.bricks.ldraw.model.MultiPartDocument;
+import com.loenan.bricks.ldraw.model.Parts;
+import com.loenan.bricks.ldraw.writer.LDrawWriter;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -7,70 +14,61 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.stream.Collectors;
-
-import static java.util.Arrays.asList;
 
 @RestController
 public class SphereController {
 
-    @GetMapping("/sphere/{diameter}")
+    @GetMapping("/sample/{diameter}")
     public HttpEntity<String> generateSphere(@PathVariable double diameter) {
-
-        List<String> lines = asList(
-                "0 FILE sphe_d6.8_c4.ldr",
-                "0 Plate Sphere, Diameter 6.8, 4x4x4 Core",
-                "0 Author: Bram's Sphere Generator",
-                "0 (c) 2018 Bram Lambrecht <lego@bldesign.org>",
-                "0",
-                " 1 16 0 -40 0 1 0 0 0 1 0 0 0 1 sphe_d6.8_c4_sub.ldr",
-                " 1 16 0 40 0 -1 0 0 0 -1 0 0 0 1 sphe_d6.8_c4_sub.ldr",
-                " 1 16 40 0 0 0 -1 0 0 0 1 -1 0 0 sphe_d6.8_c4_sub.ldr",
-                " 1 16 -40 0 0 0 1 0 0 0 1 1 0 0 sphe_d6.8_c4_sub.ldr",
-                " 1 16 0 0 40 0 0 -1 1 0 0 0 -1 0 sphe_d6.8_c4_sub.ldr",
-                " 1 16 0 0 -40 0 0 1 1 0 0 0 1 0 sphe_d6.8_c4_sub.ldr",
-                "0  ",
-                "0 FILE sphe_d6.8_c4_sub.ldr",
-                "0 Single Panel for Plate Sphere, Diameter 6.8, 4x4x4 Core",
-                "0 Author: Loenan Sphere Generator",
-                "0 (c) 2018 Laurent Istin <laurent.istin@free.fr>",
-                "0",
-                " 1 16 -10 -4 0 10 0 0 0 4 0 0 0 40 box.dat",
-                " 1 16 10 -4 0 10 0 0 0 4 0 0 0 40 box.dat",
-                " 1 16 -30 -4 0 10 0 0 0 4 0 0 0 40 box.dat",
-                " 1 16 30 -4 0 10 0 0 0 4 0 0 0 40 box.dat",
-                " 1 16 -30 -8 30 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 -30 -8 -30 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 30 -8 30 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 30 -8 -30 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 -10 -12 0 10 0 0 0 4 0 0 0 40 box.dat",
-                " 1 16 10 -12 0 10 0 0 0 4 0 0 0 40 box.dat",
-                " 1 16 -10 -16 30 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 -10 -16 -30 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 10 -16 30 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 10 -16 -30 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 -30 -12 0 10 0 0 0 4 0 0 0 20 box.dat",
-                " 1 16 30 -12 0 10 0 0 0 4 0 0 0 20 box.dat",
-                " 1 16 -30 -16 10 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 -30 -16 -10 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 30 -16 10 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 30 -16 -10 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 -10 -20 0 10 0 0 0 4 0 0 0 20 box.dat",
-                " 1 16 10 -20 0 10 0 0 0 4 0 0 0 20 box.dat",
-                " 1 16 -10 -24 10 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 -10 -24 -10 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 10 -24 10 1 0 0 0 1 0 0 0 1 stud.dat",
-                " 1 16 10 -24 -10 1 0 0 0 1 0 0 0 1 stud.dat",
-                "0");
-
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.valueOf("application/x-ldraw"));
         header.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"LoenanSphere-" + diameter + ".mpd\"");
 
-        String result = lines.stream()
+        String result = Sample.LINES.stream()
                 .collect(Collectors.joining("\n"));
 
         return new HttpEntity<>(result, header);
+    }
+
+    @GetMapping("/sphere/{diameter}")
+    public void generateSphere(@PathVariable double diameter, HttpServletResponse response) throws IOException {
+        response.setContentType("application/x-ldraw");
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"LoenanSphere-" + diameter + ".mpd\"");
+
+        LDrawBuilder modelBuilder = new LDrawBuilder("loenan_sphere_" + diameter);
+        for (CubeFace face: CubeFace.values()) {
+            modelBuilder.add(
+                    face.getPosition().mult(diameter * 10),
+                    face.getTransformation(),
+                    new LDrawBuilder("face_" + face.name().toLowerCase())
+                            .setCurrentColor(getColor(face))
+                            .add(0, -8, 0, Parts.PLATE_6X8)
+                            .add(10, -8, 10, Parts.SLOPE_31_1X1)
+                            .build());
+        }
+        LDrawWriter writer = new LDrawWriter();
+        writer.write(new MultiPartDocument(modelBuilder.build()), response.getOutputStream());
+    }
+
+    private Color getColor(CubeFace face) {
+        switch (face) {
+            case TOP:
+                return Colors.RED;
+            case BOTTOM:
+                return Colors.ORANGE;
+            case FRONT:
+                return Colors.BLUE;
+            case BACK:
+                return Colors.GREEN;
+            case LEFT:
+                return Colors.YELLOW;
+            case RIGHT:
+                return Colors.TAN;
+            default:
+                return Colors.BLACK;
+        }
     }
 }
