@@ -17,16 +17,16 @@ public class SphereController {
 	private final SphereGenerator generator;
 
 	@Autowired
-    public SphereController(SphereGenerator generator) {
-        this.generator = generator;
-    }
+	public SphereController(SphereGenerator generator) {
+		this.generator = generator;
+	}
 
-    @GetMapping("/sphere/{diameter}")
-    public void generateSphere(@PathVariable double diameter, HttpServletResponse response) throws IOException {
-        response.setContentType("application/x-ldraw");
-        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"LoenanSphere-" + diameter + ".mpd\"");
+	@GetMapping("/sphere/{diameter}")
+	public void generateSphere(@PathVariable double diameter, HttpServletResponse response) throws IOException {
+		response.setContentType("application/x-ldraw");
+		response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"LoenanSphere-" + diameter + ".mpd\"");
 
-        SphereParameters parameters = new SphereParameters(diameter);
-        generator.generateSphere(parameters, response.getOutputStream());
-    }
+		SphereParameters parameters = new SphereParameters(diameter);
+		generator.generateSphere(parameters, response.getOutputStream());
+	}
 }

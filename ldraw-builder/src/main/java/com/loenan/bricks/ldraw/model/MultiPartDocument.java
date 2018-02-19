@@ -4,13 +4,13 @@ import static java.util.Objects.requireNonNull;
 
 public class MultiPartDocument {
 
-    private final LDrawFile mainModel;
+	private final LDrawFile mainModel;
 
-    public MultiPartDocument(LDrawFile mainModel) {
-        this.mainModel = requireNonNull(mainModel);
-    }
+	public MultiPartDocument(LDrawFile mainModel) {
+		this.mainModel = requireNonNull(mainModel);
+	}
 
-    public LDrawFile getMainModel() {
-        return mainModel;
-    }
+	public LDrawFile getMainModel() {
+		return mainModel;
+	}
 }

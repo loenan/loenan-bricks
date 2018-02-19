@@ -3,10 +3,10 @@ package com.loenan.bricks.sphere.generator;
 import com.loenan.bricks.ldraw.builder.LDrawBuilder;
 import com.loenan.bricks.ldraw.color.Color;
 import com.loenan.bricks.ldraw.color.SolidColor;
-import com.loenan.bricks.sphere.generator.geometry.CubeFace;
 import com.loenan.bricks.ldraw.model.MultiPartDocument;
-import com.loenan.bricks.sphere.generator.ldaw.Parts;
 import com.loenan.bricks.ldraw.writer.LDrawWriter;
+import com.loenan.bricks.sphere.generator.geometry.CubeFace;
+import com.loenan.bricks.sphere.generator.ldaw.Parts;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class SphereGenerator {
 	public void generateSphere(SphereParameters parameters, OutputStream outputStream) throws IOException {
 		double diameter = parameters.getDiameter();
 		LDrawBuilder modelBuilder = new LDrawBuilder("loenan_sphere_" + diameter);
-		for (CubeFace face: CubeFace.values()) {
+		for (CubeFace face : CubeFace.values()) {
 			modelBuilder.add(
 					face.getPosition().mult(diameter * 10),
 					face.getTransformation(),

@@ -9,37 +9,37 @@ import static java.util.Objects.requireNonNull;
 
 public class LDrawFile implements LDrawItem {
 
-    private final String baseName;
+	private final String baseName;
 
-    private final List<Comment> comments;
+	private final List<Comment> comments;
 
-    private final List<ItemReference> itemReferences;
+	private final List<ItemReference> itemReferences;
 
-    public LDrawFile(String baseName, List<Comment> comments, List<ItemReference> itemReferences) {
-        this.baseName = requireNonNull(baseName);
-        this.comments = unmodifiableList(comments);
-        this.itemReferences = unmodifiableList(itemReferences);
-    }
+	public LDrawFile(String baseName, List<Comment> comments, List<ItemReference> itemReferences) {
+		this.baseName = requireNonNull(baseName);
+		this.comments = unmodifiableList(comments);
+		this.itemReferences = unmodifiableList(itemReferences);
+	}
 
-    public String getBaseName() {
-        return baseName;
-    }
+	public String getBaseName() {
+		return baseName;
+	}
 
-    public List<Comment> getComments() {
-        return comments;
-    }
+	public List<Comment> getComments() {
+		return comments;
+	}
 
-    public List<ItemReference> getItemReferences() {
-        return itemReferences;
-    }
+	public List<ItemReference> getItemReferences() {
+		return itemReferences;
+	}
 
-    @Override
-    public String getName() {
-        return baseName + Extensions.LDR;
-    }
+	@Override
+	public String getName() {
+		return baseName + Extensions.LDR;
+	}
 
-    public Stream<CommandLine> getCommandLines() {
-        return Stream.of(singletonList(new FileMetaCommand(baseName)), comments, itemReferences)
-                .flatMap(List::stream);
-    }
+	public Stream<CommandLine> getCommandLines() {
+		return Stream.of(singletonList(new FileMetaCommand(baseName)), comments, itemReferences)
+				.flatMap(List::stream);
+	}
 }
