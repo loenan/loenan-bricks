@@ -20,7 +20,7 @@ public class SphereGenerator {
 		LDrawBuilder modelBuilder = new LDrawBuilder("loenan_sphere_" + diameter);
 		for (CubeFace face : CubeFace.values()) {
 			modelBuilder.add(
-					face.getPosition().mult(diameter * 10),
+					face.getTranslation().mult(diameter * 10),
 					face.getTransformation(),
 					new LDrawBuilder("face_" + face.name().toLowerCase())
 							.setCurrentColor(getColor(face))

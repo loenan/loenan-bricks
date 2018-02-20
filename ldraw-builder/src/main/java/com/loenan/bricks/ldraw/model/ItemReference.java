@@ -2,7 +2,7 @@ package com.loenan.bricks.ldraw.model;
 
 import com.loenan.bricks.ldraw.color.Color;
 import com.loenan.bricks.ldraw.geometry.Matrix;
-import com.loenan.bricks.ldraw.geometry.Point;
+import com.loenan.bricks.ldraw.geometry.Vector;
 
 import static java.util.Objects.requireNonNull;
 
@@ -10,13 +10,13 @@ public class ItemReference implements CommandLine {
 
 	private final Color color;
 
-	private final Point position;
+	private final Vector position;
 
 	private final Matrix transformation;
 
 	private final LDrawItem item;
 
-	public ItemReference(Color color, Point position, Matrix transformation, LDrawItem item) {
+	public ItemReference(Color color, Vector position, Matrix transformation, LDrawItem item) {
 		this.color = requireNonNull(color);
 		this.position = requireNonNull(position);
 		this.transformation = requireNonNull(transformation);
@@ -27,7 +27,7 @@ public class ItemReference implements CommandLine {
 		return color;
 	}
 
-	public Point getPosition() {
+	public Vector getPosition() {
 		return position;
 	}
 

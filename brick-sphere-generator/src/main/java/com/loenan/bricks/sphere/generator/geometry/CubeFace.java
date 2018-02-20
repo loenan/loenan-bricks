@@ -1,7 +1,7 @@
 package com.loenan.bricks.sphere.generator.geometry;
 
 import com.loenan.bricks.ldraw.geometry.Matrix;
-import com.loenan.bricks.ldraw.geometry.Point;
+import com.loenan.bricks.ldraw.geometry.Vector;
 
 import static com.loenan.bricks.ldraw.geometry.Angle.ANTI_QUARTER_TURN;
 import static com.loenan.bricks.ldraw.geometry.Angle.HALF_TURN;
@@ -19,16 +19,16 @@ public enum CubeFace {
 	LEFT(0, 0, 1, rotationX(QUARTER_TURN).combine(rotationZ(ANTI_QUARTER_TURN))),
 	RIGHT(0, 0, -1, rotationX(ANTI_QUARTER_TURN).combine(rotationZ(ANTI_QUARTER_TURN)));
 
-	private final Point position;
+	private final Vector translation;
 	private final Matrix transformation;
 
 	CubeFace(double x, double y, double z, Matrix transformation) {
-		this.position = new Point(x, y, z);
+		this.translation = new Vector(x, y, z);
 		this.transformation = transformation;
 	}
 
-	public Point getPosition() {
-		return position;
+	public Vector getTranslation() {
+		return translation;
 	}
 
 	public Matrix getTransformation() {

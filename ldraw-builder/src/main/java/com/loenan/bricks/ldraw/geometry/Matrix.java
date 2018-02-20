@@ -59,11 +59,11 @@ public class Matrix {
 		return i;
 	}
 
-	public Point transform(Point p) {
-		return new Point(
-				a * p.getX() + b * p.getY() + c * p.getZ(),
-				d * p.getX() + e * p.getY() + f * p.getZ(),
-				g * p.getX() + h * p.getY() + i * p.getZ());
+	public Vector transform(Vector v) {
+		return new Vector(
+				a * v.getX() + b * v.getY() + c * v.getZ(),
+				d * v.getX() + e * v.getY() + f * v.getZ(),
+				g * v.getX() + h * v.getY() + i * v.getZ());
 	}
 
 	public Matrix combine(Matrix m) {

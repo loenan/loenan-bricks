@@ -2,7 +2,7 @@ package com.loenan.bricks.ldraw.builder;
 
 import com.loenan.bricks.ldraw.color.Color;
 import com.loenan.bricks.ldraw.geometry.Matrix;
-import com.loenan.bricks.ldraw.geometry.Point;
+import com.loenan.bricks.ldraw.geometry.Vector;
 import com.loenan.bricks.ldraw.geometry.Transformation;
 import com.loenan.bricks.ldraw.model.Comment;
 import com.loenan.bricks.ldraw.model.ItemReference;
@@ -57,18 +57,18 @@ public class LDrawBuilder {
 	}
 
 	public LDrawBuilder add(double x, double y, double z, LDrawItem item) {
-		return add(new Point(x, y, z), Transformation.IDENTITY, item);
+		return add(new Vector(x, y, z), Transformation.IDENTITY, item);
 	}
 
 	public LDrawBuilder add(double x, double y, double z, Matrix transformation, LDrawItem item) {
-		return add(new Point(x, y, z), transformation, item);
+		return add(new Vector(x, y, z), transformation, item);
 	}
 
-	public LDrawBuilder add(Point position, LDrawItem item) {
+	public LDrawBuilder add(Vector position, LDrawItem item) {
 		return add(position, Transformation.IDENTITY, item);
 	}
 
-	public LDrawBuilder add(Point position, Matrix transformation, LDrawItem item) {
+	public LDrawBuilder add(Vector position, Matrix transformation, LDrawItem item) {
 		itemReferences.add(new ItemReference(currentColor, position, transformation, item));
 		return this;
 	}

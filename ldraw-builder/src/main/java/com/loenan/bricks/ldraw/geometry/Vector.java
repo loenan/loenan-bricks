@@ -1,6 +1,6 @@
 package com.loenan.bricks.ldraw.geometry;
 
-public class Point {
+public class Vector {
 
 	private final double x;
 
@@ -8,7 +8,7 @@ public class Point {
 
 	private final double z;
 
-	public Point(double x, double y, double z) {
+	public Vector(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -26,16 +26,16 @@ public class Point {
 		return z;
 	}
 
-	public Point plus(Point o) {
-		return plus(this, o);
+	public Vector plus(Vector v) {
+		return plus(this, v);
 	}
 
-	public Point mult(double n) {
-		return new Point(n * x, n * y, n * z);
+	public Vector mult(double n) {
+		return new Vector(n * x, n * y, n * z);
 	}
 
-	public static Point plus(Point a, Point b) {
-		return new Point(a.x + b.x, a.y + b.y, a.z + b.z);
+	public static Vector plus(Vector a, Vector b) {
+		return new Vector(a.x + b.x, a.y + b.y, a.z + b.z);
 	}
 
 	public String format() {
