@@ -1,7 +1,7 @@
 package com.loenan.bricks.api.controller;
 
 import com.loenan.bricks.sphere.generator.SphereGenerator;
-import com.loenan.bricks.sphere.generator.SphereParameters;
+import com.loenan.bricks.sphere.generator.SphereGeneratorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,19 +14,26 @@ import java.io.IOException;
 @RestController
 public class SphereController {
 
-	private final SphereGenerator generator;
+	private final SphereGeneratorFactory generatorFactory;
 
 	@Autowired
-	public SphereController(SphereGenerator generator) {
-		this.generator = generator;
+	public SphereController(SphereGeneratorFactory generatorFactory) {
+		this.generatorFactory = generatorFactory;
 	}
 
-	@GetMapping("/sphere/{diameter}")
-	public void generateSphere(@PathVariable double diameter, HttpServletResponse response) throws IOException {
-		response.setContentType("application/x-ldraw");
-		response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"LoenanSphere-" + diameter + ".mpd\"");
+	@GetMapping("/{colorScheme}/{diameter}")
+	public void generateSphere(
+			@PathVariable String colorScheme,
+			@PathVariable double diameter,
+			HttpServletResponse response) throws IOException {
 
-		SphereParameters parameters = new SphereParameters(diameter);
-		generator.generateSphere(parameters, response.getOutputStream());
+		SphereGenerator generator = generatorFactory.createSphereGenerator();
+		generator.setColorScheme(colorScheme);
+		generator.setDiameter(diameter);
+
+		response.setContentType(generator.getContentType());
+		response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + generator.getFileName() + "\"");
+
+		generator.generateSphere(response.getOutputStream());
 	}
 }

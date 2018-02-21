@@ -5,7 +5,9 @@ import com.loenan.bricks.ldraw.model.Part;
 
 public interface Parts {
 
-	Part PLATE_6X8 = new Part(3036, "Plate 6 x8");
+	Part PLATE_6X8 = new Part(3036, "Plate 6 x 8");
+
+	Part PLATE_1X1 = new Part(3024, "Plate 1 x 1");
 
 	NamedPart TILE_1X1 = new NamedPart("3070b");
 
