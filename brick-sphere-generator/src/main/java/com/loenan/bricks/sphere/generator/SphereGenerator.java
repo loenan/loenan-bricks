@@ -2,12 +2,14 @@ package com.loenan.bricks.sphere.generator;
 
 import com.loenan.bricks.ldraw.builder.LDrawBuilder;
 import com.loenan.bricks.ldraw.color.Color;
+import com.loenan.bricks.ldraw.color.ColorSet;
 import com.loenan.bricks.ldraw.geometry.Vector;
 import com.loenan.bricks.ldraw.model.Extensions;
 import com.loenan.bricks.ldraw.model.MultiPartDocument;
 import com.loenan.bricks.ldraw.writer.LDrawWriter;
 import com.loenan.bricks.sphere.generator.color.ColorSelector;
 import com.loenan.bricks.sphere.generator.color.ColorSelectorRegistry;
+import com.loenan.bricks.sphere.generator.color.ColorRepository;
 import com.loenan.bricks.sphere.generator.color.NeutralColorSelector;
 import com.loenan.bricks.sphere.generator.geometry.CubeFace;
 import com.loenan.bricks.sphere.generator.ldaw.Parts;
@@ -34,6 +36,8 @@ public class SphereGenerator {
 
 	private final ColorSelectorRegistry colorSelectorRegistry;
 
+	private final ColorRepository colorRepository;
+
 	private String baseName = NAME_PREFIX;
 
 	private String colorScheme = NeutralColorSelector.SCHEME;
@@ -44,8 +48,10 @@ public class SphereGenerator {
 
 	private int coreSize;
 
-	public SphereGenerator(ColorSelectorRegistry colorSelectorRegistry) {
+	public SphereGenerator(ColorSelectorRegistry colorSelectorRegistry,
+						   ColorRepository colorRepository) {
 		this.colorSelectorRegistry = colorSelectorRegistry;
+		this.colorRepository = colorRepository;
 	}
 
 	public void setColorScheme(String colorScheme) {
@@ -74,6 +80,7 @@ public class SphereGenerator {
 				.setDescription(getSphereDescription())
 				.setAuthor(getAuthor())
 				.setCopyright(getCopyright());
+		ColorSet availableColors = colorRepository.getColorsByPart(Parts.TILE_1X1);
 		for (CubeFace face : CubeFace.values()) {
 			LDrawBuilder faceBuilder = new LDrawBuilder("face_" + face.name().toLowerCase())
 					.setDescription(getFaceDescription(face))
@@ -94,7 +101,7 @@ public class SphereGenerator {
 						double hCoord = -sqrt(h2);
 						Vector position = new Vector(uCoord, hCoord, vCoord);
 						position = face.getTransformation().transform(position);
-						Color color = colorSelector.selectColor(face, position);
+						Color color = colorSelector.selectColor(face, position, availableColors);
 
 						faceBuilder
 								.setCurrentColor(color)

@@ -1,5 +1,6 @@
 package com.loenan.bricks.ldraw.color;
 
+@SuppressWarnings("unused")
 public interface TransparentColor {
 	Color TRANS_CLEAR = new Color(47, "FCFCFC");
 	Color TRANS_BLACK = new Color(40, "635F52");

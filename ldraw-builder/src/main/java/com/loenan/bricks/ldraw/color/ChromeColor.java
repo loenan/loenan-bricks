@@ -1,5 +1,6 @@
 package com.loenan.bricks.ldraw.color;
 
+@SuppressWarnings("unused")
 public interface ChromeColor {
 	Color CHROME_GOLD = new Color(334, "BBA53D");
 	Color CHROME_SILVER = new Color(383, "E0E0E0");

@@ -1,5 +1,6 @@
 package com.loenan.bricks.ldraw.color;
 
+@SuppressWarnings("unused")
 public interface SolidColor {
 	Color BLACK = new Color(0, "05131D");
 	Color BLUE = new Color(1, "0055BF");
@@ -8,8 +9,8 @@ public interface SolidColor {
 	Color RED = new Color(4, "C91A09");
 	Color DARK_PINK = new Color(5, "C870A0");
 	Color BROWN = new Color(6, "583927");
-	Color LIGHT_GREY = new Color(7, "9BA19D");
-	Color DARK_GREY = new Color(8, "6D6E5C");
+	Color LIGHT_GRAY = new Color(7, "9BA19D");
+	Color DARK_GRAY = new Color(8, "6D6E5C");
 	Color LIGHT_BLUE = new Color(9, "B4D2E3");
 	Color BRIGHT_GREEN = new Color(10, "4B9F4A");
 	Color LIGHT_TURQUOISE = new Color(11, "55A5AF");
@@ -33,14 +34,15 @@ public interface SolidColor {
 	Color VERY_LIGHT_ORANGE = new Color(68, "F3CF9B");
 	Color BRIGHT_REDDISH_LILAC = new Color(69, "CD6298");
 	Color REDDISH_BROWN = new Color(70, "582A12");
-	Color LIGHT_BLUISH_GREY = new Color(71, "A0A5A9");
-	Color DARK_BLUISH_GREY = new Color(72, "6C6E68");
+	Color LIGHT_BLUISH_GRAY = new Color(71, "A0A5A9");
+	Color DARK_BLUISH_GRAY = new Color(72, "6C6E68");
 	Color MEDIUM_BLUE = new Color(73, "5C9DD1");
 	Color MEDIUM_GREEN = new Color(74, "73DCA1");
 	Color LIGHT_PINK = new Color(77, "FECCCF");
 	Color LIGHT_FLESH = new Color(78, "F6D7B3");
 	Color MEDIUM_DARK_FLESH = new Color(84, "CC702A");
 	Color MEDIUM_LILAC = new Color(85, "3F3691");
+	Color DARK_PURPLE = MEDIUM_LILAC;
 	Color DARK_FLESH = new Color(86, "7C503A");
 	Color BLUE_VIOLET = new Color(89, "4C61DB");
 	Color FLESH = new Color(92, "D09168");
@@ -51,7 +53,7 @@ public interface SolidColor {
 	Color AQUA = new Color(118, "B3D7D1");
 	Color LIGHT_LIME = new Color(120, "D9E4A7");
 	Color LIGHT_ORANGE = new Color(125, "F9BA61");
-	Color VERY_LIGHT_BLUISH_GREY = new Color(151, "E6E3E0");
+	Color VERY_LIGHT_BLUISH_GRAY = new Color(151, "E6E3E0");
 	Color BRIGHT_LIGHT_ORANGE = new Color(191, "F8BB3D");
 	Color BRIGHT_LIGHT_BLUE = new Color(212, "86C1E1");
 	Color RUST = new Color(216, "B31004");
@@ -76,7 +78,7 @@ public interface SolidColor {
 	Color FABULAND_BROWN = new Color(450, "B67B50");
 	Color MEDIUM_ORANGE = new Color(462, "FFA70B");
 	Color DARK_ORANGE = new Color(484, "A95500");
-	Color VERY_LIGHT_GREY = new Color(503, "E6E3DA");
+	Color VERY_LIGHT_GRAY = new Color(503, "E6E3DA");
 	Color REDDISH_LILAC = new Color(218, "8E5597");
 	Color FLAMINGO_PINK = new Color(295, "FF94C2");
 	Color LILAC = new Color(219, "564E9D");

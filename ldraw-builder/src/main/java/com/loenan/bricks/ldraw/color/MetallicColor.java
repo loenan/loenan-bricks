@@ -1,5 +1,6 @@
 package com.loenan.bricks.ldraw.color;
 
+@SuppressWarnings("unused")
 public interface MetallicColor {
 	Color METALLIC_SILVER = new Color(80, "A5A9B4");
 	Color METALLIC_GREEN = new Color(81, "899B5F");

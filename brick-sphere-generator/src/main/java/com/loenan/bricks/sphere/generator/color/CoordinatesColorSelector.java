@@ -1,6 +1,7 @@
 package com.loenan.bricks.sphere.generator.color;
 
 import com.loenan.bricks.ldraw.color.Color;
+import com.loenan.bricks.ldraw.color.ColorSet;
 import com.loenan.bricks.ldraw.geometry.Vector;
 import com.loenan.bricks.sphere.generator.geometry.CubeFace;
 
@@ -16,13 +17,13 @@ public abstract class CoordinatesColorSelector implements ColorSelector {
 
 
 	@Override
-	public Color selectColor(CubeFace face, Vector position) {
+	public Color selectColor(CubeFace face, Vector position, ColorSet availableColors) {
 		double radius = sqrt(sq(position.getX()) + sq(position.getY()) + sq(position.getZ()));
 		double longitude = atan2(position.getZ(), position.getX()) / PI * HALF_TURN_DEGREES;
 		double latitude = asin(- position.getY() / radius) / PI * HALF_TURN_DEGREES;
 
-		return selectColor(longitude, latitude);
+		return selectColor(longitude, latitude, availableColors);
 	}
 
-	public abstract Color selectColor(double longitude, double latitude);
+	public abstract Color selectColor(double longitude, double latitude, ColorSet availableColors);
 }

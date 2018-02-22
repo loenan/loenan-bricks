@@ -1,5 +1,6 @@
 package com.loenan.bricks.ldraw.color;
 
+@SuppressWarnings("unused")
 public interface PearlColor {
 	Color PEARL_WHITE = new Color(183, "F2F3F2");
 	Color PEARL_VERY_LIGHT_GREY = new Color(150, "BBBDBC");
