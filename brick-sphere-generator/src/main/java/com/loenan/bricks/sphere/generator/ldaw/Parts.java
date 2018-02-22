@@ -1,15 +1,12 @@
 package com.loenan.bricks.sphere.generator.ldaw;
 
-import com.loenan.bricks.ldraw.model.NamedPart;
 import com.loenan.bricks.ldraw.model.Part;
 
 public interface Parts {
 
-	Part PLATE_6X8 = new Part(3036, "Plate 6 x 8");
-
 	Part PLATE_1X1 = new Part(3024, "Plate 1 x 1");
 
-	NamedPart TILE_1X1 = new NamedPart("3070b");
+	Part TILE_1X1 = new Part("3070b", "Tile 1 x 1");
 
 	Part SLOPE_31_1X1 = new Part(54200, "Slope Brick 31 1 x 1 x 0.667");
 
