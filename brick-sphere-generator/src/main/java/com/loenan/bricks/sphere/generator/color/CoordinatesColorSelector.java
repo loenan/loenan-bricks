@@ -15,6 +15,16 @@ public abstract class CoordinatesColorSelector implements ColorSelector {
 
 	private static final double HALF_TURN_DEGREES = 180;
 
+	private final String colorScheme;
+
+	protected CoordinatesColorSelector(String colorScheme) {
+		this.colorScheme = colorScheme;
+	}
+
+	@Override
+	public String getScheme() {
+		return colorScheme;
+	}
 
 	@Override
 	public Color selectColor(CubeFace face, Vector position, ColorSet availableColors) {

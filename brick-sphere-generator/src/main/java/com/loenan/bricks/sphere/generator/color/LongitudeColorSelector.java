@@ -10,6 +10,8 @@ import static java.lang.Math.floorMod;
 @Component
 public class LongitudeColorSelector extends CoordinatesColorSelector {
 
+	public static final String SCHEME = "longitude";
+
 	private static final Color[] COLORS = {
 			SolidColor.ORANGE,
 			SolidColor.RED,
@@ -19,11 +21,8 @@ public class LongitudeColorSelector extends CoordinatesColorSelector {
 			SolidColor.TAN,
 	};
 
-	public static final String SCHEME = "longitude";
-
-	@Override
-	public String getScheme() {
-		return SCHEME;
+	public LongitudeColorSelector() {
+		super(SCHEME);
 	}
 
 	@Override

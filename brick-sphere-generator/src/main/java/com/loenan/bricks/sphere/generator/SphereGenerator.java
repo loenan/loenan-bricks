@@ -1,15 +1,14 @@
 package com.loenan.bricks.sphere.generator;
 
 import com.loenan.bricks.ldraw.builder.LDrawBuilder;
-import com.loenan.bricks.ldraw.color.Color;
 import com.loenan.bricks.ldraw.color.ColorSet;
 import com.loenan.bricks.ldraw.geometry.Vector;
 import com.loenan.bricks.ldraw.model.Extensions;
 import com.loenan.bricks.ldraw.model.MultiPartDocument;
 import com.loenan.bricks.ldraw.writer.LDrawWriter;
+import com.loenan.bricks.sphere.generator.color.ColorRepository;
 import com.loenan.bricks.sphere.generator.color.ColorSelector;
 import com.loenan.bricks.sphere.generator.color.ColorSelectorRegistry;
-import com.loenan.bricks.sphere.generator.color.ColorRepository;
 import com.loenan.bricks.sphere.generator.color.NeutralColorSelector;
 import com.loenan.bricks.sphere.generator.geometry.CubeFace;
 import com.loenan.bricks.sphere.generator.ldaw.Parts;
@@ -86,10 +85,10 @@ public class SphereGenerator {
 					.setDescription(getFaceDescription(face))
 					.setAuthor(getAuthor())
 					.setCopyright(getCopyright());
-			double uShift = (diameterExt - 1.0) / 2;
-			double vShift = (coreSize - 1.0) / 2;
-			for (int u = 0; u < diameterExt; u++) {
-				for (int v = 0; v < coreSize; v++) {
+			double uShift = (coreSize - 1.0) / 2;
+			double vShift = (diameterExt - 1.0) / 2;
+			for (int u = 0; u < coreSize; u++) {
+				for (int v = 0; v < diameterExt; v++) {
 					double uCoord = u - uShift;
 					double vCoord = v - vShift;
 					double h2 = sq(diameter / 2) - sq(uCoord) - sq(vCoord);
@@ -101,20 +100,15 @@ public class SphereGenerator {
 						double hCoord = -sqrt(h2);
 						Vector position = new Vector(uCoord, hCoord, vCoord);
 						position = face.getTransformation().transform(position);
-						Color color = colorSelector.selectColor(face, position, availableColors);
-
 						faceBuilder
-								.setCurrentColor(color)
-								.add(
-								uCoord * STUD_WIDTH_LDU,
-								-h * PLATE_HEIGHT_LDU,
-								vCoord * STUD_WIDTH_LDU,
-								Parts.TILE_1X1);
-						while (h > 1) {
-							h--;
-							faceBuilder.add(
-									uCoord * STUD_WIDTH_LDU,
-									-h * PLATE_HEIGHT_LDU,
+								.setCurrentColor(colorSelector.selectColor(face, position, availableColors))
+								.add(uCoord * STUD_WIDTH_LDU,
+										-h * PLATE_HEIGHT_LDU,
+										vCoord * STUD_WIDTH_LDU,
+										Parts.TILE_1X1);
+						for (int dh = 1; dh < 3 && h - dh > 0; dh++) {
+							faceBuilder.add(uCoord * STUD_WIDTH_LDU,
+									-(h - dh) * PLATE_HEIGHT_LDU,
 									vCoord * STUD_WIDTH_LDU,
 									Parts.PLATE_1X1);
 						}

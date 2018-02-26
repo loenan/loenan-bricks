@@ -10,6 +10,8 @@ import static java.lang.Math.floorMod;
 @Component
 public class LatitudeColorSelector extends CoordinatesColorSelector {
 
+	public static final String SCHEME = "latitude";
+
 	private static final Color[] COLORS = {
 			SolidColor.ORANGE,
 			SolidColor.RED,
@@ -19,11 +21,8 @@ public class LatitudeColorSelector extends CoordinatesColorSelector {
 			SolidColor.TAN,
 	};
 
-	public static final String SCHEME = "latitude";
-
-	@Override
-	public String getScheme() {
-		return SCHEME;
+	public LatitudeColorSelector() {
+		super(SCHEME);
 	}
 
 	@Override
