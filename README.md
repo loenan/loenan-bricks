@@ -24,6 +24,25 @@ You can easily add yours!
 
 Source file: [LoenanSphere-pokeball-D15.0-C8.mpd](doc/LoenanSphere-pokeball-D15.0-C8.mpd)
 
+### Earth
+
+Diameter &#x2300;28:
+
+![Earth (D28)](doc/earth_D28_1.png) 
+![Earth (D28)](doc/earth_D28_2.png)
+
+Source file: [LoenanSphere-earth-D28.0-C16.mpd](doc/LoenanSphere-earth-D28.0-C16.mpd) 
+
+Diameter &#x2300;50:
+
+![Earth (D50)](doc/earth_D50.png)
+
+Credits:
+
+- `Large_World_Topo_Map_2.png` image from https://commons.wikimedia.org/wiki/File:Large_World_Topo_Map_2.png
+  (Creative Commons license)
+
+
 ## Main modules
 
 Name                               | Comments
@@ -60,6 +79,7 @@ http://localhost:8080/pokeball/15
 The URL format is `http://localhost:8080/<color scheme>/<diameter>`. 
 
 Example color schemes:
+- `earth`
 - `pokeball`
 - `faces`
 - `longitude`
