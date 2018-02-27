@@ -130,13 +130,12 @@ public class SphereGenerator {
 
 	private String getSphereDescription() {
 		return "Brick Sphere, Diameter " + diameter + ", " +
-				coreSize + "x" + coreSize + "x" + coreSize + " Core";
+				coreSize + "x" + coreSize + "x" + coreSize + " Core, " +
+				colorScheme + " color scheme";
 	}
 
 	private String getFaceDescription(CubeFace face) {
-		return "Face panel (" + face.name().toLowerCase() + ") for " +
-				"Brick Sphere, Diameter " + diameter + ", " +
-				coreSize + "x" + coreSize + "x" + coreSize + " Core";
+		return "Face panel (" + face.name().toLowerCase() + ") for " + getSphereDescription();
 	}
 
 	private String getAuthor() {
