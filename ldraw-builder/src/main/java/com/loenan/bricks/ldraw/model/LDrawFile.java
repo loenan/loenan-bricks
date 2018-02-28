@@ -11,26 +11,15 @@ public class LDrawFile implements LDrawItem {
 
 	private final String baseName;
 
-	private final List<Comment> comments;
+	private final List<CommandLine> commandLines;
 
-	private final List<ItemReference> itemReferences;
-
-	public LDrawFile(String baseName, List<Comment> comments, List<ItemReference> itemReferences) {
+	public LDrawFile(String baseName, List<CommandLine> commandLines) {
 		this.baseName = requireNonNull(baseName);
-		this.comments = unmodifiableList(comments);
-		this.itemReferences = unmodifiableList(itemReferences);
+		this.commandLines = unmodifiableList(commandLines);
 	}
 
 	public String getBaseName() {
 		return baseName;
-	}
-
-	public List<Comment> getComments() {
-		return comments;
-	}
-
-	public List<ItemReference> getItemReferences() {
-		return itemReferences;
 	}
 
 	@Override
@@ -39,7 +28,7 @@ public class LDrawFile implements LDrawItem {
 	}
 
 	public Stream<CommandLine> getCommandLines() {
-		return Stream.of(singletonList(new FileMetaCommand(baseName)), comments, itemReferences)
+		return Stream.of(singletonList(new FileMetaCommand(baseName)), commandLines)
 				.flatMap(List::stream);
 	}
 }

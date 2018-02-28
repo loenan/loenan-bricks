@@ -2,7 +2,7 @@
 
 > Generate the Earth, spheres and other models in Lego, at any size ! 
 
-Loenan Bricks libraries provide tools to compute and generate Lego models [in LDraw format](http://www.ldraw.org/), 
+Loenan Bricks libraries provide Java tools to compute and generate Lego models [in LDraw format](http://www.ldraw.org/), 
 such as spheres with various color scheme, in any size. 
 
 - **LDraw Builder** library is a simple low level library to build and write Lego models in LDraw format.
@@ -39,17 +39,17 @@ Diameter &#x2300;50:
 
 Credits:
 
-- `Large_World_Topo_Map_2.png` image from https://commons.wikimedia.org/wiki/File:Large_World_Topo_Map_2.png
+- Generated using `Large_World_Topo_Map_2.png` image from https://commons.wikimedia.org/wiki/File:Large_World_Topo_Map_2.png
   (Creative Commons license)
 
 
-## Main modules
+## Modules
 
-Name                               | Comments
----------------------------------- | ------------------
-ldraw-builder                      | A simple LDraw model builder and writer library
-brick-sphere-generator             | Core library to generate spheres
-brick-sphere-app                   | Web Application to run the Brick Sphere Generator
+Name                                             | Comments
+------------------------------------------------ | ------------------
+[ldraw-builder](ldraw-builder)                   | A simple LDraw model builder and writer library
+[brick-sphere-generator](brick-sphere-generator) | Core library to generate spheres
+[brick-sphere-app](brick-sphere-app)             | Web Application to run the Brick Sphere Generator
 
 ## Getting started
 

@@ -5,13 +5,14 @@ import com.loenan.bricks.ldraw.color.ColorSet;
 import com.loenan.bricks.ldraw.geometry.Vector;
 import com.loenan.bricks.ldraw.model.Extensions;
 import com.loenan.bricks.ldraw.model.MultiPartDocument;
+import com.loenan.bricks.ldraw.part.Plate;
+import com.loenan.bricks.ldraw.part.Tile;
 import com.loenan.bricks.ldraw.writer.LDrawWriter;
 import com.loenan.bricks.sphere.generator.color.ColorRepository;
 import com.loenan.bricks.sphere.generator.color.ColorSelector;
 import com.loenan.bricks.sphere.generator.color.ColorSelectorRegistry;
 import com.loenan.bricks.sphere.generator.color.NeutralColorSelector;
 import com.loenan.bricks.sphere.generator.geometry.CubeFace;
-import com.loenan.bricks.sphere.generator.ldaw.Parts;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -79,7 +80,7 @@ public class SphereGenerator {
 				.setDescription(getSphereDescription())
 				.setAuthor(getAuthor())
 				.setCopyright(getCopyright());
-		ColorSet availableColors = colorRepository.getColorsByPart(Parts.TILE_1X1);
+		ColorSet availableColors = colorRepository.getColorsByPart(Tile.TILE_1x1);
 		for (CubeFace face : CubeFace.values()) {
 			LDrawBuilder faceBuilder = new LDrawBuilder("face_" + face.name().toLowerCase())
 					.setDescription(getFaceDescription(face))
@@ -105,12 +106,12 @@ public class SphereGenerator {
 								.add(uCoord * STUD_WIDTH_LDU,
 										-h * PLATE_HEIGHT_LDU,
 										vCoord * STUD_WIDTH_LDU,
-										Parts.TILE_1X1);
+										Tile.TILE_1x1);
 						for (int dh = 1; dh < 3 && h - dh > 0; dh++) {
 							faceBuilder.add(uCoord * STUD_WIDTH_LDU,
 									-(h - dh) * PLATE_HEIGHT_LDU,
 									vCoord * STUD_WIDTH_LDU,
-									Parts.PLATE_1X1);
+									Plate.PLATE_1x1);
 						}
 					}
 				}

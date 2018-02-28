@@ -1,5 +1,6 @@
 package com.loenan.bricks.ldraw.writer;
 
+import com.loenan.bricks.ldraw.model.CommandLine;
 import com.loenan.bricks.ldraw.model.ItemReference;
 import com.loenan.bricks.ldraw.model.LDrawFile;
 import com.loenan.bricks.ldraw.model.MultiPartDocument;
@@ -23,15 +24,29 @@ public class LDrawWriter {
 
 			files.values().stream()
 					.flatMap(LDrawFile::getCommandLines)
-					.forEach(line -> {
-						try {
-							writer.append(line.getLine()).append('\n');
-						} catch (IOException e) {
-							throw new UncheckedIOException(e);
-						}
-					});
+					.forEach(line -> writeLine(writer, line));
+
 		} catch (UncheckedIOException e) {
 			throw e.getCause();
+		}
+	}
+
+	public void write(LDrawFile file, OutputStream outputStream) throws IOException {
+		try (Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8)) {
+
+			file.getCommandLines()
+					.forEach(line -> writeLine(writer, line));
+
+		} catch (UncheckedIOException e) {
+			throw e.getCause();
+		}
+	}
+
+	private void writeLine(Writer writer, CommandLine line) {
+		try {
+			writer.append(line.getLine()).append('\n');
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
 		}
 	}
 
@@ -44,9 +59,12 @@ public class LDrawWriter {
 		files.put(fileName, file);
 
 		// search and add sub-files
-		file.getItemReferences().stream()
+		file.getCommandLines()
+				.filter(ItemReference.class::isInstance)
+				.map(ItemReference.class::cast)
 				.map(ItemReference::getItem)
-				.filter(item -> item instanceof LDrawFile)
-				.forEach(item -> addFileAndSubFiles(files, (LDrawFile) item));
+				.filter(LDrawFile.class::isInstance)
+				.map(LDrawFile.class::cast)
+				.forEach(item -> addFileAndSubFiles(files, item));
 	}
 }
