@@ -7,13 +7,13 @@ import com.loenan.bricks.sphere.generator.geometry.CubeFace;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NeutralColorSelector implements ColorSelector {
+public class NeutralColorScheme implements ColorScheme {
 
-	public static final String SCHEME = "neutral";
+	public static final String SCHEME_NAME = "neutral";
 
 	@Override
-	public String getScheme() {
-		return SCHEME;
+	public String getSchemeName() {
+		return SCHEME_NAME;
 	}
 
 	@Override

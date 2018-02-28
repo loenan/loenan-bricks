@@ -2,7 +2,7 @@ package com.loenan.bricks.sphere.generator.color.image;
 
 import com.loenan.bricks.ldraw.color.Color;
 import com.loenan.bricks.ldraw.color.ColorSet;
-import com.loenan.bricks.sphere.generator.color.CoordinatesColorSelector;
+import com.loenan.bricks.sphere.generator.color.CoordinatesColorScheme;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -11,7 +11,7 @@ import java.io.InputStream;
 
 import static java.lang.Math.min;
 
-public abstract class ImagePickerColorSelector extends CoordinatesColorSelector {
+public abstract class ImagePickerColorScheme extends CoordinatesColorScheme {
 
 	private final BufferedImage image;
 
@@ -19,8 +19,8 @@ public abstract class ImagePickerColorSelector extends CoordinatesColorSelector 
 
 	private final int imageHeight;
 
-	protected ImagePickerColorSelector(String colorScheme, String imageResource) throws IOException {
-		super(colorScheme);
+	protected ImagePickerColorScheme(String schemeName, String imageResource) throws IOException {
+		super(schemeName);
 		try (InputStream inputStream = getClass().getClassLoader()
 				.getResourceAsStream(imageResource)) {
 			if (inputStream == null) {

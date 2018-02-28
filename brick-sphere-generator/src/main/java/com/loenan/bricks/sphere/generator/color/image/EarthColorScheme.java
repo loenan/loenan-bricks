@@ -10,9 +10,9 @@ import java.io.IOException;
 import static java.util.Arrays.asList;
 
 @Component
-public class EarthColorSelector extends ImagePickerColorSelector {
+public class EarthColorScheme extends ImagePickerColorScheme {
 
-	public static final String SCHEME = "earth";
+	public static final String SCHEME_NAME = "earth";
 
 	private static final String IMAGE_RESOURCE = "images/Large_World_Topo_Map_2.png";
 
@@ -25,8 +25,8 @@ public class EarthColorSelector extends ImagePickerColorSelector {
 			SolidColor.WHITE
 	));
 
-	public EarthColorSelector() throws IOException {
-		super(SCHEME, IMAGE_RESOURCE);
+	public EarthColorScheme() throws IOException {
+		super(SCHEME_NAME, IMAGE_RESOURCE);
 	}
 
 	@Override

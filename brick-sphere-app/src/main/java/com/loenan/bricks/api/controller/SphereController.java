@@ -28,7 +28,7 @@ public class SphereController {
 			HttpServletResponse response) throws IOException {
 
 		SphereGenerator generator = generatorFactory.createSphereGenerator();
-		generator.setColorScheme(colorScheme);
+		generator.setColorSchemeName(colorScheme);
 		generator.setDiameter(diameter);
 
 		response.setContentType(generator.getContentType());

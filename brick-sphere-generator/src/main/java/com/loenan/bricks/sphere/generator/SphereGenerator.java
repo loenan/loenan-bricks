@@ -9,9 +9,9 @@ import com.loenan.bricks.ldraw.part.Plate;
 import com.loenan.bricks.ldraw.part.Tile;
 import com.loenan.bricks.ldraw.writer.LDrawWriter;
 import com.loenan.bricks.sphere.generator.color.ColorRepository;
-import com.loenan.bricks.sphere.generator.color.ColorSelector;
-import com.loenan.bricks.sphere.generator.color.ColorSelectorRegistry;
-import com.loenan.bricks.sphere.generator.color.NeutralColorSelector;
+import com.loenan.bricks.sphere.generator.color.ColorScheme;
+import com.loenan.bricks.sphere.generator.color.ColorSchemeRegistry;
+import com.loenan.bricks.sphere.generator.color.NeutralColorScheme;
 import com.loenan.bricks.sphere.generator.geometry.CubeFace;
 
 import java.io.IOException;
@@ -34,13 +34,13 @@ public class SphereGenerator {
 
 	private static final int PLATE_HEIGHT_LDU = 8;
 
-	private final ColorSelectorRegistry colorSelectorRegistry;
+	private final ColorSchemeRegistry colorSchemeRegistry;
 
 	private final ColorRepository colorRepository;
 
 	private String baseName = NAME_PREFIX;
 
-	private String colorScheme = NeutralColorSelector.SCHEME;
+	private String colorSchemeName = NeutralColorScheme.SCHEME_NAME;
 
 	private double diameter;
 
@@ -48,14 +48,14 @@ public class SphereGenerator {
 
 	private int coreSize;
 
-	public SphereGenerator(ColorSelectorRegistry colorSelectorRegistry,
+	public SphereGenerator(ColorSchemeRegistry colorSchemeRegistry,
 						   ColorRepository colorRepository) {
-		this.colorSelectorRegistry = colorSelectorRegistry;
+		this.colorSchemeRegistry = colorSchemeRegistry;
 		this.colorRepository = colorRepository;
 	}
 
-	public void setColorScheme(String colorScheme) {
-		this.colorScheme = colorScheme;
+	public void setColorSchemeName(String colorSchemeName) {
+		this.colorSchemeName = colorSchemeName;
 		setBaseName();
 	}
 
@@ -75,7 +75,7 @@ public class SphereGenerator {
 	}
 
 	public void generateSphere(OutputStream outputStream) throws IOException {
-		ColorSelector colorSelector = colorSelectorRegistry.getColorSelector(colorScheme);
+		ColorScheme colorScheme = colorSchemeRegistry.getColorScheme(this.colorSchemeName);
 		LDrawBuilder modelBuilder = new LDrawBuilder(baseName)
 				.setDescription(getSphereDescription())
 				.setAuthor(getAuthor())
@@ -102,7 +102,7 @@ public class SphereGenerator {
 						Vector position = new Vector(uCoord, hCoord, vCoord);
 						position = face.getTransformation().transform(position);
 						faceBuilder
-								.setCurrentColor(colorSelector.selectColor(face, position, availableColors))
+								.setCurrentColor(colorScheme.selectColor(face, position, availableColors))
 								.add(uCoord * STUD_WIDTH_LDU,
 										-h * PLATE_HEIGHT_LDU,
 										vCoord * STUD_WIDTH_LDU,
@@ -126,13 +126,13 @@ public class SphereGenerator {
 	}
 
 	private void setBaseName() {
-		this.baseName = NAME_PREFIX + "-" + colorScheme + "-D" + diameter + "-C" + coreSize;
+		this.baseName = NAME_PREFIX + "-" + colorSchemeName + "-D" + diameter + "-C" + coreSize;
 	}
 
 	private String getSphereDescription() {
 		return "Brick Sphere, Diameter " + diameter + ", " +
 				coreSize + "x" + coreSize + "x" + coreSize + " Core, " +
-				colorScheme + " color scheme";
+				colorSchemeName + " color scheme";
 	}
 
 	private String getFaceDescription(CubeFace face) {

@@ -8,13 +8,13 @@ import com.loenan.bricks.sphere.generator.geometry.CubeFace;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FaceColorSelector implements ColorSelector {
+public class FaceColorScheme implements ColorScheme {
 
-	public static final String SCHEME = "faces";
+	public static final String SCHEME_NAME = "faces";
 
 	@Override
-	public String getScheme() {
-		return SCHEME;
+	public String getSchemeName() {
+		return SCHEME_NAME;
 	}
 
 	@Override

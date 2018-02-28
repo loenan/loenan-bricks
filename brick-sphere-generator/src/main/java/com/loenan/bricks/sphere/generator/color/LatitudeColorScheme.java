@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import static java.lang.Math.floorMod;
 
 @Component
-public class LongitudeColorSelector extends CoordinatesColorSelector {
+public class LatitudeColorScheme extends CoordinatesColorScheme {
 
-	public static final String SCHEME = "longitude";
+	public static final String SCHEME_NAME = "latitude";
 
 	private static final Color[] COLORS = {
 			SolidColor.ORANGE,
@@ -21,12 +21,12 @@ public class LongitudeColorSelector extends CoordinatesColorSelector {
 			SolidColor.TAN,
 	};
 
-	public LongitudeColorSelector() {
-		super(SCHEME);
+	public LatitudeColorScheme() {
+		super(SCHEME_NAME);
 	}
 
 	@Override
 	public Color selectColor(double longitude, double latitude, ColorSet availableColors) {
-		return COLORS[floorMod((int)(180 + longitude / 30), COLORS.length)];
+		return COLORS[floorMod((int)(90 + latitude / 30), COLORS.length)];
 	}
 }

@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class TestColorSelector extends ImagePickerColorSelector {
+public class TestColorScheme extends ImagePickerColorScheme {
 
-	public static final String SCHEME = "colortest";
+	public static final String SCHEME_NAME = "colortest";
 
 	private static final String IMAGE_RESOURCE = "images/color_test.png";
 
-	public TestColorSelector() throws IOException {
-		super(SCHEME, IMAGE_RESOURCE);
+	public TestColorScheme() throws IOException {
+		super(SCHEME_NAME, IMAGE_RESOURCE);
 	}
 }

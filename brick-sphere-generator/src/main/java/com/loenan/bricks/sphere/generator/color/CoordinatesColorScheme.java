@@ -11,19 +11,19 @@ import static java.lang.Math.asin;
 import static java.lang.Math.atan2;
 import static java.lang.Math.sqrt;
 
-public abstract class CoordinatesColorSelector implements ColorSelector {
+public abstract class CoordinatesColorScheme implements ColorScheme {
 
 	private static final double HALF_TURN_DEGREES = 180;
 
-	private final String colorScheme;
+	private final String schemeName;
 
-	protected CoordinatesColorSelector(String colorScheme) {
-		this.colorScheme = colorScheme;
+	protected CoordinatesColorScheme(String schemeName) {
+		this.schemeName = schemeName;
 	}
 
 	@Override
-	public String getScheme() {
-		return colorScheme;
+	public String getSchemeName() {
+		return schemeName;
 	}
 
 	@Override
