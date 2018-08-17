@@ -9,6 +9,10 @@
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<scm>
+		<connection>scm:git:https://github.com/loenan/loenan-bricks.git</connection>
+	</scm>
+
 	<modules>
 		<module>ldraw-builder</module>
 		<module>brick-sphere-generator</module>
@@ -59,6 +63,14 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
 				</configuration>
 			</plugin>
 		</plugins>
