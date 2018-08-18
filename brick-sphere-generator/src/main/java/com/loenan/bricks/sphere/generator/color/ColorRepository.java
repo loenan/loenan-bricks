@@ -12,11 +12,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class ColorRepository {
@@ -25,34 +26,34 @@ public class ColorRepository {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	private Map<String, ColorSet> colorsByDesignId = new HashMap<>();
+	private Map<String, ColorSet> colorsByDesignId = new ConcurrentHashMap<>();
 
-	public synchronized ColorSet getColorsByPart(Part part) throws IOException {
-		String designId = part.getDesignId();
-		ColorSet colorSet = colorsByDesignId.get(designId);
-		if (colorSet == null) {
-			List<Color> colors = new ArrayList<>();
-			try (InputStream inputStream = getClass().getClassLoader()
-					.getResourceAsStream(RESOURCE_DIR_PATH + designId)) {
-				if (inputStream == null) {
-					logger.info("No color found for part {}.", designId);
-				} else {
-					BufferedReader reader = new BufferedReader(new InputStreamReader(
-							inputStream, StandardCharsets.UTF_8));
-					String colorName;
-					while ((colorName = reader.readLine()) != null) {
-						Color color = Colors.getByName(colorName);
-						if (color != null) {
-							colors.add(color);
-						} else  {
-							logger.info("Color {} for part {} not found.", colorName, designId);
-						}
+	public ColorSet getColorsByPart(Part part) {
+		return colorsByDesignId.computeIfAbsent(part.getDesignId(), this::loadColorsForDesignId);
+	}
+
+	private ColorSet loadColorsForDesignId(String designId) {
+		List<Color> colors = new ArrayList<>();
+		try (InputStream inputStream = getClass().getClassLoader()
+				.getResourceAsStream(RESOURCE_DIR_PATH + designId)) {
+			if (inputStream == null) {
+				logger.info("No color found for part {}.", designId);
+			} else {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(
+						inputStream, StandardCharsets.UTF_8));
+				String colorName;
+				while ((colorName = reader.readLine()) != null) {
+					Color color = Colors.getByName(colorName);
+					if (color != null) {
+						colors.add(color);
+					} else  {
+						logger.info("Color {} for part {} not found.", colorName, designId);
 					}
 				}
 			}
-			colorSet = new ColorSet(colors);
-			colorsByDesignId.put(designId, colorSet);
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
 		}
-		return colorSet;
+		return new ColorSet(colors);
 	}
 }

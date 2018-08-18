@@ -40,7 +40,9 @@ public class SphereGenerator {
 
 	private String baseName = NAME_PREFIX;
 
-	private String colorSchemeName = NeutralColorScheme.SCHEME_NAME;
+	private String colorSchemeName;
+
+	private ColorScheme colorScheme;
 
 	private double diameter;
 
@@ -52,11 +54,14 @@ public class SphereGenerator {
 						   ColorRepository colorRepository) {
 		this.colorSchemeRegistry = colorSchemeRegistry;
 		this.colorRepository = colorRepository;
+
+		setColorSchemeName(NeutralColorScheme.SCHEME_NAME); // default color scheme
 	}
 
 	public void setColorSchemeName(String colorSchemeName) {
 		this.colorSchemeName = colorSchemeName;
 		setBaseName();
+		colorScheme = colorSchemeRegistry.getColorScheme(this.colorSchemeName);
 	}
 
 	public void setDiameter(double diameter) {
@@ -75,54 +80,56 @@ public class SphereGenerator {
 	}
 
 	public void generateSphere(OutputStream outputStream) throws IOException {
-		ColorScheme colorScheme = colorSchemeRegistry.getColorScheme(this.colorSchemeName);
 		LDrawBuilder modelBuilder = new LDrawBuilder(baseName)
 				.setDescription(getSphereDescription())
 				.setAuthor(getAuthor())
 				.setCopyright(getCopyright());
-		ColorSet availableColors = colorRepository.getColorsByPart(Tile.TILE_1x1);
+
 		for (CubeFace face : CubeFace.values()) {
 			LDrawBuilder faceBuilder = new LDrawBuilder("face_" + face.name().toLowerCase())
 					.setDescription(getFaceDescription(face))
 					.setAuthor(getAuthor())
 					.setCopyright(getCopyright());
-			double uShift = (coreSize - 1.0) / 2;
-			double vShift = (diameterExt - 1.0) / 2;
-			for (int u = 0; u < coreSize; u++) {
-				for (int v = 0; v < diameterExt; v++) {
-					double uCoord = u - uShift;
-					double vCoord = v - vShift;
-					double h2 = sq(diameter / 2) - sq(uCoord) - sq(vCoord);
-					if (h2 <= 0) {
-						continue;
-					}
-					int h = (int) round((sqrt(h2) - coreSize / 2.0) * STUD_WIDTH_LDU / PLATE_HEIGHT_LDU);
-					if (h > 0) {
-						double hCoord = -sqrt(h2);
-						Vector position = new Vector(uCoord, hCoord, vCoord);
-						position = face.getTransformation().transform(position);
-						faceBuilder
-								.setCurrentColor(colorScheme.selectColor(face, position, availableColors))
-								.add(uCoord * STUD_WIDTH_LDU,
-										-h * PLATE_HEIGHT_LDU,
-										vCoord * STUD_WIDTH_LDU,
-										Tile.TILE_1x1);
-						for (int dh = 1; dh < 3 && h - dh > 0; dh++) {
-							faceBuilder.add(uCoord * STUD_WIDTH_LDU,
-									-(h - dh) * PLATE_HEIGHT_LDU,
-									vCoord * STUD_WIDTH_LDU,
-									Plate.PLATE_1x1);
-						}
-					}
-				}
-			}
+
+			StudPosition.area(coreSize, diameterExt)
+					.forEach(studPosition -> generateStudParts(faceBuilder, face, studPosition));
+
 			modelBuilder.add(
 					face.getTranslation().mult(coreSize * STUD_WIDTH_LDU / 2),
 					face.getTransformation(),
 					faceBuilder.build());
 		}
+
 		LDrawWriter writer = new LDrawWriter();
 		writer.write(new MultiPartDocument(modelBuilder.build()), outputStream);
+	}
+
+	private void generateStudParts(LDrawBuilder faceBuilder, CubeFace face, StudPosition studPosition) {
+		double centerU = studPosition.getCenterU();
+		double centerV = studPosition.getCenterV();
+		double h2 = sq(diameter / 2) - sq(centerU) - sq(centerV);
+		if (h2 <= 0) {
+			return;
+		}
+		int h = (int) round((sqrt(h2) - coreSize / 2.0) * STUD_WIDTH_LDU / PLATE_HEIGHT_LDU);
+		if (h > 0) {
+			double hCoord = -sqrt(h2);
+			Vector position = new Vector(centerU, hCoord, centerV);
+			ColorSet availableColors = colorRepository.getColorsByPart(Tile.TILE_1x1);
+			position = face.getTransformation().transform(position);
+			faceBuilder
+					.setCurrentColor(colorScheme.selectColor(face, position, availableColors))
+					.add(centerU * STUD_WIDTH_LDU,
+							-h * PLATE_HEIGHT_LDU,
+							centerV * STUD_WIDTH_LDU,
+							Tile.TILE_1x1);
+			for (int dh = 1; dh < 3 && h - dh > 0; dh++) {
+				faceBuilder.add(centerU * STUD_WIDTH_LDU,
+						-(h - dh) * PLATE_HEIGHT_LDU,
+						centerV * STUD_WIDTH_LDU,
+						Plate.PLATE_1x1);
+			}
+		}
 	}
 
 	private void setBaseName() {
