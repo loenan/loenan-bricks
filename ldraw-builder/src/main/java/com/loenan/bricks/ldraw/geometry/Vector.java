@@ -41,4 +41,9 @@ public class Vector {
 	public String format() {
 		return Format.format(this);
 	}
+
+	@Override
+	public String toString() {
+		return format();
+	}
 }

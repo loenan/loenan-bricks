@@ -3,11 +3,11 @@ package com.loenan.bricks.ldraw.geometry;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-class Format {
+public class Format {
 
 	private static final NumberFormat FORMAT = new DecimalFormat("#.######");
 
-	static String format(double x) {
+	public static String format(double x) {
 		String result = FORMAT.format(x);
 		// Some small negative values can be rounded and formatted to "-0". Replace it to "0".
 		return result.equals("-0") ? "0" : result;
