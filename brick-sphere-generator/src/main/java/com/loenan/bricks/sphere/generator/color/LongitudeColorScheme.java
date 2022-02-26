@@ -13,12 +13,12 @@ public class LongitudeColorScheme extends CoordinatesColorScheme {
 	public static final String SCHEME_NAME = "longitude";
 
 	private static final Color[] COLORS = {
-			SolidColor.ORANGE,
 			SolidColor.RED,
-			SolidColor.BLUE,
-			SolidColor.GREEN,
+			SolidColor.ORANGE,
 			SolidColor.YELLOW,
-			SolidColor.TAN,
+			SolidColor.GREEN,
+			SolidColor.BLUE,
+			SolidColor.DARK_BLUE,
 	};
 
 	public LongitudeColorScheme() {
@@ -27,6 +27,6 @@ public class LongitudeColorScheme extends CoordinatesColorScheme {
 
 	@Override
 	public Color selectColor(double longitude, double latitude, ColorSet availableColors) {
-		return COLORS[floorMod((int)(180 + longitude / 30), COLORS.length)];
+		return COLORS[floorMod((int)((180 + longitude) / 15), COLORS.length)];
 	}
 }
