@@ -25,7 +25,7 @@ public class SphereController {
 		this.generatorFactory = generatorFactory;
 	}
 
-	@GetMapping("/{colorScheme}/{diameter}")
+	@GetMapping("/{colorScheme}/{diameter:.+}")
 	public void generateSphere(
 			@PathVariable String colorScheme,
 			@PathVariable double diameter,
