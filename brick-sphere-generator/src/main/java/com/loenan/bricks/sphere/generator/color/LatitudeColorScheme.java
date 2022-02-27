@@ -3,11 +3,13 @@ package com.loenan.bricks.sphere.generator.color;
 import com.loenan.bricks.ldraw.color.Color;
 import com.loenan.bricks.ldraw.color.ColorSet;
 import com.loenan.bricks.ldraw.color.SolidColor;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import static java.lang.Math.floorMod;
 
 @Component
+@Order(6)
 public class LatitudeColorScheme extends CoordinatesColorScheme {
 
 	public static final String SCHEME_NAME = "latitude";

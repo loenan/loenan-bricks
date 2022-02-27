@@ -1,0 +1,67 @@
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<title>Loenan's Brick Sphere Generator</title>
+	<script>
+			function generateSphere() {
+				var f = document.getElementById('sphere-form');
+				f.action = '/' + f.colorScheme.value + '/' + f.diameter.value;
+			}
+	</script>
+	<style type="text/css">
+		table {
+			width: 500px;
+		}
+		input[type="number"] {
+			width: 200px;
+		}
+		select {
+			width: 200px;
+		}
+		.colLabel {
+			text-align: right;
+			width: 40%;
+		}
+		.colInput {
+			text-align: left;
+			width: 60%;
+		}
+	</style>
+</head>
+<body>
+<div align="center">
+	<form id="sphere-form" onsubmit="generateSphere()" target="_blank">
+		<table>
+			<tr>
+				<td colspan="2">
+					<h1>Loenan's Brick Sphere Generator</h1>
+					This application generates a <a href="https://www.ldraw.org">LDraw</a> <tt>.mpd</tt> file
+					modeling a brick-built sphere. You can choose the diameter of the sphere and its color scheme.
+				</td>
+			</tr>
+			<tr><td colspan="2"></td></tr>
+			<tr>
+				<td class="colLabel">Color scheme:</td>
+				<td class="colInput">
+					<select name="colorScheme">
+						<option th:each="name: ${colorSchemeNames}" th:value="${name}" th:text="${name}"/>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="colLabel">Diameter:</td>
+				<td class="colInput">
+					<input type="number" name="diameter" value="18" min="0" step="0.1">
+				</td>
+			</tr>
+			<tr><td colspan="2"></td></tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="Generate sphere">
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+</body>
+</html>

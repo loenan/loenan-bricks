@@ -5,9 +5,11 @@ import com.loenan.bricks.ldraw.color.ColorSet;
 import com.loenan.bricks.ldraw.color.SolidColor;
 import com.loenan.bricks.ldraw.geometry.Vector;
 import com.loenan.bricks.sphere.generator.geometry.CubeFace;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
+@Order(3)
 public class FaceColorScheme implements ColorScheme {
 
 	public static final String SCHEME_NAME = "faces";

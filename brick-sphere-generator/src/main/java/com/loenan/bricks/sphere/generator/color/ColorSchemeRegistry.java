@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,12 +26,16 @@ public class ColorSchemeRegistry {
 	public ColorSchemeRegistry(List<ColorScheme> colorSchemes) {
 		colorSchemeMap = colorSchemes.stream()
 				.peek(cs -> logger.info("Registered Color scheme '{}'.", cs.getSchemeName()))
-				.collect(toMap(ColorScheme::getSchemeName, identity()));
+				.collect(toMap(ColorScheme::getSchemeName, identity(), (u, v) -> u, LinkedHashMap::new));
 		defaultColorScheme = colorSchemeMap.get(NeutralColorScheme.SCHEME_NAME);
 	}
 
 	public ColorScheme getColorScheme(String schemeName) {
 		return colorSchemeMap.getOrDefault(schemeName, defaultColorScheme);
+	}
+
+	public List<String> getSchemeNames() {
+		return new ArrayList<>(colorSchemeMap.keySet());
 	}
 }
 
