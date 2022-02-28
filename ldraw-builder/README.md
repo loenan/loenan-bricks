@@ -100,5 +100,4 @@ try (FileOutputStream outputStream = new FileOutputStream("lowell_sphere.mpd")) 
 }
 ```
 
-Full source: see [LowellSphere.java](src/main/java/com/loenan/bricks/ldraw/examples/LowellSphere.java)
-
+See [LowellSphereTest.java](src/test/java/com/loenan/bricks/ldraw/writer/LowellSphereTest.java).

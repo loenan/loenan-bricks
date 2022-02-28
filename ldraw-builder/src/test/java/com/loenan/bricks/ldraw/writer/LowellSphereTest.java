@@ -1,4 +1,4 @@
-package com.loenan.bricks.ldraw.examples;
+package com.loenan.bricks.ldraw.writer;
 
 import com.loenan.bricks.ldraw.builder.LDrawBuilder;
 import com.loenan.bricks.ldraw.color.SolidColor;
@@ -9,15 +9,25 @@ import com.loenan.bricks.ldraw.model.MultiPartDocument;
 import com.loenan.bricks.ldraw.part.BrickModified;
 import com.loenan.bricks.ldraw.part.Plate;
 import com.loenan.bricks.ldraw.part.PlateModified;
-import com.loenan.bricks.ldraw.writer.LDrawWriter;
+import org.junit.jupiter.api.Test;
 
-import java.io.FileOutputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.stream.IntStream;
 
-public class LowellSphere {
+import static java.util.stream.Collectors.toList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-	public static void main(String[] args) throws IOException {
+public class LowellSphereTest {
 
+	@Test
+	public void testLowellSphere() throws IOException {
 		LDrawFile face = new LDrawBuilder("face")
 				.setCurrentColor(SolidColor.RED)
 				.add(0, -8, 30, Plate.PLATE_1x4)
@@ -65,8 +75,20 @@ public class LowellSphere {
 		MultiPartDocument mpd = new MultiPartDocument(lowellSphere);
 
 		LDrawWriter writer = new LDrawWriter();
-		try (FileOutputStream outputStream = new FileOutputStream("lowell_sphere.mpd")) {
-			writer.write(mpd, outputStream);
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		writer.write(mpd, outputStream);
+
+		List<String> resultLines = readLines(new ByteArrayInputStream(outputStream.toByteArray()));
+		List<String> expectedLines = readLines(LowellSphereTest.class.getResourceAsStream("/lowell_sphere.mpd"));
+
+		IntStream.range(0, Math.min(resultLines.size(), expectedLines.size()))
+				.forEach(i -> assertEquals(expectedLines.get(i), resultLines.get(i), String.format("Lines #%d differ", i+1)));
+		assertEquals(expectedLines.size(), resultLines.size(), "Line count differs");
+	}
+
+	private List<String> readLines(InputStream inputStream) throws IOException {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+			return reader.lines().collect(toList());
 		}
 	}
 }
