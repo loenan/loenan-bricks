@@ -10,7 +10,11 @@ import com.loenan.bricks.ldraw.model.Extensions;
 import com.loenan.bricks.ldraw.model.ItemReference;
 import com.loenan.bricks.ldraw.model.LDrawFile;
 import com.loenan.bricks.ldraw.model.LDrawItem;
+import com.loenan.bricks.ldraw.model.Line;
 import com.loenan.bricks.ldraw.model.MetaCommands;
+import com.loenan.bricks.ldraw.model.OptionalLine;
+import com.loenan.bricks.ldraw.model.Quad;
+import com.loenan.bricks.ldraw.model.Triangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +76,26 @@ public class LDrawBuilder {
 
 	public LDrawBuilder add(Vector position, Matrix transformation, LDrawItem item) {
 		commandLines.add(new ItemReference(currentColor, position, transformation, item));
+		return this;
+	}
+
+	public LDrawBuilder addLine(Vector point1, Vector point2) {
+		commandLines.add(new Line(currentColor, point1, point2));
+		return this;
+	}
+
+	public LDrawBuilder addTriangle(Vector point1, Vector point2, Vector point3) {
+		commandLines.add(new Triangle(currentColor, point1, point2, point3));
+		return this;
+	}
+
+	public LDrawBuilder addQuad(Vector point1, Vector point2, Vector point3, Vector point4) {
+		commandLines.add(new Quad(currentColor, point1, point2, point3, point4));
+		return this;
+	}
+
+	public LDrawBuilder addOptionalLine(Vector point1, Vector point2, Vector controlPoint1, Vector controlPoint2) {
+		commandLines.add(new OptionalLine(currentColor, point1, point2, controlPoint1, controlPoint2));
 		return this;
 	}
 

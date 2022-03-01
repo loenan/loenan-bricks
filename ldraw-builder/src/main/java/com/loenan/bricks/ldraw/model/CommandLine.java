@@ -15,10 +15,13 @@ public interface CommandLine {
 					case "1":
 						return ItemReference.read(reader);
 					case "2":
+						return Line.read(reader);
 					case "3":
+						return Triangle.read(reader);
 					case "4":
+						return Quad.read(reader);
 					case "5":
-						throw new UnsupportedOperationException("Command type not supported: " + type);
+						return OptionalLine.read(reader);
 					default:
 						throw new IllegalArgumentException("Unknown command type: " + type);
 				}

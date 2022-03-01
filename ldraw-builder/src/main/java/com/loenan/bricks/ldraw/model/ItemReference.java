@@ -48,6 +48,9 @@ public class ItemReference implements CommandLine {
 
 	@Override
 	public String getLine() {
-		return "1 " + color.getColorId() + " " + position.format() + " " + transformation.format() + " " + item.getName();
+		return "1 " + color.getColorId()
+			+ " " + position.format()
+			+ " " + transformation.format()
+			+ " " + item.getName();
 	}
 }
