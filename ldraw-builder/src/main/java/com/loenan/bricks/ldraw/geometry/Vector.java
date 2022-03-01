@@ -1,12 +1,23 @@
 package com.loenan.bricks.ldraw.geometry;
 
+import com.loenan.bricks.ldraw.reader.LineReader;
+
+import java.util.NoSuchElementException;
+
 public class Vector {
 
 	private final double x;
-
 	private final double y;
-
 	private final double z;
+
+	public static Vector read(LineReader reader) {
+		return reader.readTokens(3)
+			.map(tokens -> new Vector(
+				Double.parseDouble(tokens.get(0)),
+				Double.parseDouble(tokens.get(1)),
+				Double.parseDouble(tokens.get(2))))
+			.orElseThrow(() -> new NoSuchElementException("No vector defined"));
+	}
 
 	public Vector(double x, double y, double z) {
 		this.x = x;

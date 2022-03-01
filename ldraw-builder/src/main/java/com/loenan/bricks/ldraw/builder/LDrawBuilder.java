@@ -6,6 +6,7 @@ import com.loenan.bricks.ldraw.geometry.Transformation;
 import com.loenan.bricks.ldraw.geometry.Vector;
 import com.loenan.bricks.ldraw.model.CommandLine;
 import com.loenan.bricks.ldraw.model.Comment;
+import com.loenan.bricks.ldraw.model.Extensions;
 import com.loenan.bricks.ldraw.model.ItemReference;
 import com.loenan.bricks.ldraw.model.LDrawFile;
 import com.loenan.bricks.ldraw.model.LDrawItem;
@@ -21,15 +22,12 @@ import static java.util.stream.Collectors.toList;
 public class LDrawBuilder {
 
 	private final static String AUTHOR_PREFIX = "Author: ";
-
 	private final static String COPYRIGHT_PREFIX = "(c) ";
 
-	private final String baseName;
+	private final String fileName;
 
 	private String description;
-
 	private String author;
-
 	private String copyright;
 
 	private List<CommandLine> commandLines = new ArrayList<>();
@@ -37,7 +35,7 @@ public class LDrawBuilder {
 	private Color currentColor = Color.MAIN_COLOR;
 
 	public LDrawBuilder(String baseName) {
-		this.baseName = baseName;
+		this.fileName = baseName + Extensions.LDR;
 	}
 
 	public LDrawBuilder setDescription(String description) {
@@ -88,7 +86,7 @@ public class LDrawBuilder {
 	}
 
 	public LDrawFile build() {
-		return new LDrawFile(baseName, Stream.of(buildComments(), commandLines).flatMap(List::stream).collect(toList()));
+		return new LDrawFile(fileName, Stream.of(buildComments(), commandLines).flatMap(List::stream).collect(toList()));
 	}
 
 	private List<Comment> buildComments() {

@@ -11,18 +11,12 @@ import com.loenan.bricks.ldraw.part.Plate;
 import com.loenan.bricks.ldraw.part.PlateModified;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.toList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.loenan.bricks.ldraw.TestUtils.assertContentEquals;
+import static com.loenan.bricks.ldraw.TestUtils.loadLowellSphereContent;
+import static com.loenan.bricks.ldraw.TestUtils.toInputStream;
 
 public class LowellSphereTest {
 
@@ -78,17 +72,8 @@ public class LowellSphereTest {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		writer.write(mpd, outputStream);
 
-		List<String> resultLines = readLines(new ByteArrayInputStream(outputStream.toByteArray()));
-		List<String> expectedLines = readLines(LowellSphereTest.class.getResourceAsStream("/lowell_sphere.mpd"));
-
-		IntStream.range(0, Math.min(resultLines.size(), expectedLines.size()))
-				.forEach(i -> assertEquals(expectedLines.get(i), resultLines.get(i), String.format("Lines #%d differ", i+1)));
-		assertEquals(expectedLines.size(), resultLines.size(), "Line count differs");
-	}
-
-	private List<String> readLines(InputStream inputStream) throws IOException {
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-			return reader.lines().collect(toList());
-		}
+		assertContentEquals(
+			loadLowellSphereContent(),
+			toInputStream(outputStream));
 	}
 }

@@ -2,6 +2,7 @@ package com.loenan.bricks.ldraw.part;
 
 import com.loenan.bricks.ldraw.model.Part;
 
+@SuppressWarnings("unused")
 public interface BrickRound {
 
 	Part BRICK_ROUND_1x1 = new Part("3062b", "Brick 1 x 1 Round with Hollow Stud");

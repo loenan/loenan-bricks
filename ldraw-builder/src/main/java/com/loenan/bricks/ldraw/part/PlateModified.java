@@ -2,6 +2,7 @@ package com.loenan.bricks.ldraw.part;
 
 import com.loenan.bricks.ldraw.model.Part;
 
+@SuppressWarnings("unused")
 public interface PlateModified {
 
 	Part PLATE_1x2_JUMPER = new Part(15573, "Plate 1 x 2 with Groove with 1 Centre Stud");

@@ -3,12 +3,14 @@ package com.loenan.bricks.ldraw.model;
 public class Part implements LDrawItem {
 
 	private final String designId;
-
 	private final String description;
 
+	public Part(String designId) {
+		this(designId, designId);
+	}
+
 	public Part(int designId, String description) {
-		this.designId = String.valueOf(designId);
-		this.description = description;
+		this(String.valueOf(designId), description);
 	}
 
 	public Part(String designId, String description) {

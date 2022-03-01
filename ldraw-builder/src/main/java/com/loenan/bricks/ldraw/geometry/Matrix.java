@@ -1,12 +1,29 @@
 package com.loenan.bricks.ldraw.geometry;
 
+import com.loenan.bricks.ldraw.reader.LineReader;
+
+import java.util.NoSuchElementException;
+
 public class Matrix {
 
 	private final double a, b, c;
-
 	private final double d, e, f;
-
 	private final double g, h, i;
+
+	public static Matrix read(LineReader reader) {
+		return reader.readTokens(9)
+			.map(tokens -> new Matrix(
+				Double.parseDouble(tokens.get(0)),
+				Double.parseDouble(tokens.get(1)),
+				Double.parseDouble(tokens.get(2)),
+				Double.parseDouble(tokens.get(3)),
+				Double.parseDouble(tokens.get(4)),
+				Double.parseDouble(tokens.get(5)),
+				Double.parseDouble(tokens.get(6)),
+				Double.parseDouble(tokens.get(7)),
+				Double.parseDouble(tokens.get(8))))
+			.orElseThrow(() -> new NoSuchElementException("No matrix defined"));
+	}
 
 	public Matrix(
 			double a, double b, double c,

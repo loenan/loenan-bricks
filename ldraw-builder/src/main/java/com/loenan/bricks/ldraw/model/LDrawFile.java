@@ -1,34 +1,42 @@
 package com.loenan.bricks.ldraw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toList;
 
 public class LDrawFile implements LDrawItem {
 
-	private final String baseName;
-
+	private final String fileName;
 	private final List<CommandLine> commandLines;
 
-	public LDrawFile(String baseName, List<CommandLine> commandLines) {
-		this.baseName = requireNonNull(baseName);
-		this.commandLines = unmodifiableList(commandLines);
+	public LDrawFile(String fileName, List<CommandLine> commandLines) {
+		this.fileName = requireNonNull(fileName);
+		this.commandLines = unmodifiableList(Stream.concat(
+			Stream.of(new FileMetaCommand(fileName)),
+			commandLines.stream())
+			.collect(toList()));
 	}
 
-	public String getBaseName() {
-		return baseName;
+	public LDrawFile(List<CommandLine> commandLines) {
+		this.fileName = commandLines.stream()
+			.findFirst()
+			.filter(FileMetaCommand.class::isInstance)
+			.map(FileMetaCommand.class::cast)
+			.map(FileMetaCommand::getParameters)
+			.orElse(null);
+		this.commandLines = unmodifiableList(new ArrayList<>(commandLines));
 	}
 
 	@Override
 	public String getName() {
-		return baseName + Extensions.LDR;
+		return fileName;
 	}
 
-	public Stream<CommandLine> getCommandLines() {
-		return Stream.of(singletonList(new FileMetaCommand(baseName)), commandLines)
-				.flatMap(List::stream);
+	public List<CommandLine> getCommandLines() {
+		return commandLines;
 	}
 }

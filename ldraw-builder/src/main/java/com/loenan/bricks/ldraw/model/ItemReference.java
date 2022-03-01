@@ -4,17 +4,24 @@ import com.loenan.bricks.ldraw.color.Color;
 import com.loenan.bricks.ldraw.geometry.Matrix;
 import com.loenan.bricks.ldraw.geometry.Vector;
 
+import com.loenan.bricks.ldraw.reader.LineReader;
+
 import static java.util.Objects.requireNonNull;
 
 public class ItemReference implements CommandLine {
 
 	private final Color color;
-
 	private final Vector position;
-
 	private final Matrix transformation;
-
 	private final LDrawItem item;
+
+	public static ItemReference read(LineReader reader) {
+		return new ItemReference(
+			Color.read(reader),
+			Vector.read(reader),
+			Matrix.read(reader),
+			LDrawItem.read(reader));
+	}
 
 	public ItemReference(Color color, Vector position, Matrix transformation, LDrawItem item) {
 		this.color = requireNonNull(color);

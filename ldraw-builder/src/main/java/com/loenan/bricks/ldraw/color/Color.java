@@ -1,27 +1,33 @@
 package com.loenan.bricks.ldraw.color;
 
+import com.loenan.bricks.ldraw.reader.LineReader;
+
+import java.util.NoSuchElementException;
+
 import static java.lang.Math.abs;
 import static java.util.Objects.requireNonNull;
 
 public class Color {
 
 	public static final int MAIN_COLOR_ID = 16;
-
 	public static final int EDGE_COLOR_ID = 24;
 
 	public static final Color MAIN_COLOR = new Color(MAIN_COLOR_ID);
-
 	public static final Color EDGE_COLOR = new Color(EDGE_COLOR_ID);
 
 	private final int colorId;
-
 	private final String rgb;
-
 	private final int red;
-
 	private final int green;
-
 	private final int blue;
+	private String name;
+
+	public static Color read(LineReader reader) {
+		return reader.readToken()
+			.map(Integer::parseInt)
+			.map(Colors::getById)
+			.orElseThrow(() -> new NoSuchElementException("No color defined"));
+	}
 
 	/**
 	 * Private constructor for special reserved colors, without actual RGB value.
@@ -63,6 +69,14 @@ public class Color {
 
 	public int getBlue() {
 		return blue;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	void setName(String name) {
+		this.name = name;
 	}
 
 	public int getDistanceTo(int red, int green, int blue) {

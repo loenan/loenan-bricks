@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 public class MetaCommand implements CommandLine {
 
 	private final String command;
-
 	private final String parameters;
 
 	public MetaCommand(String command) {

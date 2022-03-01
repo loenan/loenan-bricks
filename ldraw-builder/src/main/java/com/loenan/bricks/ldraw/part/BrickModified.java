@@ -2,6 +2,7 @@ package com.loenan.bricks.ldraw.part;
 
 import com.loenan.bricks.ldraw.model.Part;
 
+@SuppressWarnings("unused")
 public interface BrickModified {
 
 	Part BRICK_MODIFIED_1x1_ERLANG = new Part(4070, "Brick 1 x 1 with Headlight");

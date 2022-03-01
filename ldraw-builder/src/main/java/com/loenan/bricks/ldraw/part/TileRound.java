@@ -2,6 +2,7 @@ package com.loenan.bricks.ldraw.part;
 
 import com.loenan.bricks.ldraw.model.Part;
 
+@SuppressWarnings("unused")
 public interface TileRound {
 
 	Part TILE_ROUND_1x1 = new Part(98138, "Tile 1 x 1 Round with Groove");

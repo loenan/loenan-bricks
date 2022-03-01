@@ -11,6 +11,7 @@ import java.io.OutputStreamWriter;
 import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -23,8 +24,9 @@ public class LDrawWriter {
 			addFileAndSubFiles(files, document.getMainModel());
 
 			files.values().stream()
-					.flatMap(LDrawFile::getCommandLines)
-					.forEach(line -> writeLine(writer, line));
+				.map(LDrawFile::getCommandLines)
+				.flatMap(Collection::stream)
+				.forEach(line -> writeLine(writer, line));
 
 		} catch (UncheckedIOException e) {
 			throw e.getCause();
@@ -35,7 +37,7 @@ public class LDrawWriter {
 		try (Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8)) {
 
 			file.getCommandLines()
-					.forEach(line -> writeLine(writer, line));
+				.forEach(line -> writeLine(writer, line));
 
 		} catch (UncheckedIOException e) {
 			throw e.getCause();
@@ -51,7 +53,7 @@ public class LDrawWriter {
 	}
 
 	private void addFileAndSubFiles(Map<String, LDrawFile> files, LDrawFile file) {
-		String fileName = file.getBaseName();
+		String fileName = file.getName();
 		if (files.containsKey(fileName)) {
 			return;
 		}
@@ -59,12 +61,12 @@ public class LDrawWriter {
 		files.put(fileName, file);
 
 		// search and add sub-files
-		file.getCommandLines()
-				.filter(ItemReference.class::isInstance)
-				.map(ItemReference.class::cast)
-				.map(ItemReference::getItem)
-				.filter(LDrawFile.class::isInstance)
-				.map(LDrawFile.class::cast)
-				.forEach(item -> addFileAndSubFiles(files, item));
+		file.getCommandLines().stream()
+			.filter(ItemReference.class::isInstance)
+			.map(ItemReference.class::cast)
+			.map(ItemReference::getItem)
+			.filter(LDrawFile.class::isInstance)
+			.map(LDrawFile.class::cast)
+			.forEach(item -> addFileAndSubFiles(files, item));
 	}
 }

@@ -2,6 +2,7 @@ package com.loenan.bricks.ldraw.part;
 
 import com.loenan.bricks.ldraw.model.Part;
 
+@SuppressWarnings("unused")
 public interface Plate {
 
 	Part PLATE_1x1 = new Part(3024, "Plate 1 x 1");
