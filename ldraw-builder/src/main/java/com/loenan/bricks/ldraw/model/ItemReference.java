@@ -13,7 +13,7 @@ public class ItemReference implements CommandLine {
 	private final Color color;
 	private final Vector position;
 	private final Matrix transformation;
-	private final LDrawItem item;
+	private LDrawItem item;
 
 	public static ItemReference read(LineReader reader) {
 		return new ItemReference(
@@ -44,6 +44,10 @@ public class ItemReference implements CommandLine {
 
 	public LDrawItem getItem() {
 		return item;
+	}
+
+	public void replaceItem(LDrawItem item) {
+		this.item = item;
 	}
 
 	@Override

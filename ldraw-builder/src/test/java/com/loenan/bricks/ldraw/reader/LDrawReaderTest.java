@@ -1,6 +1,7 @@
 package com.loenan.bricks.ldraw.reader;
 
 import com.loenan.bricks.ldraw.model.LDrawFile;
+import com.loenan.bricks.ldraw.model.MultiPartDocument;
 import com.loenan.bricks.ldraw.writer.LDrawWriter;
 import org.junit.jupiter.api.Test;
 
@@ -19,12 +20,29 @@ public class LDrawReaderTest {
 		LDrawFile model;
 		try (InputStream inputStream = loadLowellSphereContent()) {
 			LDrawReader reader = new LDrawReader();
-			model = reader.read(inputStream);
+			model = reader.readLDR(inputStream);
 		}
 
 		LDrawWriter writer = new LDrawWriter();
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		writer.write(model, outputStream);
+
+		assertContentEquals(
+			loadLowellSphereContent(),
+			toInputStream(outputStream));
+	}
+
+	@Test
+	public void testReadMPD() throws IOException {
+		MultiPartDocument document;
+		try (InputStream inputStream = loadLowellSphereContent()) {
+			LDrawReader reader = new LDrawReader();
+			document = reader.readMPD(inputStream);
+		}
+
+		LDrawWriter writer = new LDrawWriter();
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		writer.write(document, outputStream);
 
 		assertContentEquals(
 			loadLowellSphereContent(),
