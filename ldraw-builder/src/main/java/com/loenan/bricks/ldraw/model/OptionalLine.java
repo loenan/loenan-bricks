@@ -5,7 +5,10 @@ import com.loenan.bricks.ldraw.geometry.Vector;
 
 import com.loenan.bricks.ldraw.reader.LineReader;
 
+import java.util.stream.Stream;
+
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.joining;
 
 public class OptionalLine implements CommandLine {
 
@@ -59,5 +62,12 @@ public class OptionalLine implements CommandLine {
 			+ " " + point2.format()
 			+ " " + controlPoint1.format()
 			+ " " + controlPoint2.format();
+	}
+
+	@Override
+	public String toString() {
+		return Stream.of("5", color, point1, point2, "/", controlPoint1, controlPoint2)
+			.map(Object::toString)
+			.collect(joining(" "));
 	}
 }

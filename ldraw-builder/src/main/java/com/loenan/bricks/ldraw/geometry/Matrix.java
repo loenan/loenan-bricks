@@ -100,4 +100,9 @@ public class Matrix {
 	public String format() {
 		return Format.format(this);
 	}
+
+	@Override
+	public String toString() {
+		return Format.toString(this);
+	}
 }

@@ -18,4 +18,9 @@ public class Comment implements CommandLine {
 	public String getLine() {
 		return "0 " + comment;
 	}
+
+	@Override
+	public String toString() {
+		return getLine();
+	}
 }

@@ -3,10 +3,12 @@ package com.loenan.bricks.ldraw.model;
 import com.loenan.bricks.ldraw.color.Color;
 import com.loenan.bricks.ldraw.geometry.Matrix;
 import com.loenan.bricks.ldraw.geometry.Vector;
-
 import com.loenan.bricks.ldraw.reader.LineReader;
 
+import java.util.stream.Stream;
+
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.joining;
 
 public class ItemReference implements CommandLine {
 
@@ -56,5 +58,12 @@ public class ItemReference implements CommandLine {
 			+ " " + position.format()
 			+ " " + transformation.format()
 			+ " " + item.getName();
+	}
+
+	@Override
+	public String toString() {
+		return Stream.of("1", color, position, transformation, item.getName())
+			.map(Object::toString)
+			.collect(joining(" "));
 	}
 }

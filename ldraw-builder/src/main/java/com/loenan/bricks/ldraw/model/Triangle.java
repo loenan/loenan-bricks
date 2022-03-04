@@ -5,7 +5,10 @@ import com.loenan.bricks.ldraw.geometry.Vector;
 
 import com.loenan.bricks.ldraw.reader.LineReader;
 
+import java.util.stream.Stream;
+
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.joining;
 
 public class Triangle implements CommandLine {
 
@@ -51,5 +54,12 @@ public class Triangle implements CommandLine {
 			+ " " + point1.format()
 			+ " " + point2.format()
 			+ " " + point3.format();
+	}
+
+	@Override
+	public String toString() {
+		return Stream.of("3", color, point1, point2, point3)
+			.map(Object::toString)
+			.collect(joining(" "));
 	}
 }

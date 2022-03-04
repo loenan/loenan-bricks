@@ -28,4 +28,9 @@ public class MetaCommand implements CommandLine {
 	public String getLine() {
 		return "0 " + command + (parameters != null ? " " + parameters : "");
 	}
+
+	@Override
+	public String toString() {
+		return getLine();
+	}
 }

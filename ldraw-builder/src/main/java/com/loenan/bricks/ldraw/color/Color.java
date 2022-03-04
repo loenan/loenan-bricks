@@ -3,6 +3,9 @@ package com.loenan.bricks.ldraw.color;
 import com.loenan.bricks.ldraw.reader.LineReader;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.lang.Math.abs;
 import static java.util.Objects.requireNonNull;
@@ -94,5 +97,12 @@ public class Color {
 
 	private boolean isComponentValid(int c) {
 		return 0 <= c && c < 256;
+	}
+
+	@Override
+	public String toString() {
+		return Stream.of(String.valueOf(colorId), name)
+			.filter(Objects::nonNull)
+			.collect(Collectors.joining(" ",  "[", "]"));
 	}
 }

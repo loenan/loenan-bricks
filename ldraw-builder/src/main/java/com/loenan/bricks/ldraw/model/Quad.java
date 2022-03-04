@@ -5,7 +5,10 @@ import com.loenan.bricks.ldraw.geometry.Vector;
 
 import com.loenan.bricks.ldraw.reader.LineReader;
 
+import java.util.stream.Stream;
+
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.joining;
 
 public class Quad implements CommandLine {
 
@@ -59,5 +62,12 @@ public class Quad implements CommandLine {
 			+ " " + point2.format()
 			+ " " + point3.format()
 			+ " " + point4.format();
+	}
+
+	@Override
+	public String toString() {
+		return Stream.of("4", color, point1, point2, point3, point4)
+			.map(Object::toString)
+			.collect(joining(" "));
 	}
 }
