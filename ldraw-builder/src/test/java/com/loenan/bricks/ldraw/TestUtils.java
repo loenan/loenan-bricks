@@ -16,7 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestUtils {
 
 	public static InputStream loadLowellSphereContent() {
-		return TestUtils.class.getResourceAsStream("/lowell_sphere.mpd");
+		return loadTestContent("lowell_sphere.mpd");
+	}
+
+	public static InputStream loadTestContent(String testFile) {
+		return TestUtils.class.getResourceAsStream("/" + testFile);
 	}
 
 	public static InputStream toInputStream(ByteArrayOutputStream byteArrayOutputStream) {
