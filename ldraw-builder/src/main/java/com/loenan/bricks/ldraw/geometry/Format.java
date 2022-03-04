@@ -5,7 +5,7 @@ import java.text.NumberFormat;
 
 class Format {
 
-	private static final NumberFormat FORMAT = new DecimalFormat("#.######");
+	private static final NumberFormat FORMAT = new DecimalFormat("#.######", new DecimalFormatSymbols(Locale.US));
 
 	static String format(double x) {
 		String result = FORMAT.format(x);
